@@ -4,9 +4,19 @@ hr-worker/target/
 !hr-worker/**/src/main/**/target/
 !hr-worker/**/src/test/**/target/
 
+hr-payroll/target/
+!hr-payroll/.mvn/wrapper/maven-wrapper.jar
+!hr-payroll/**/src/main/**/target/
+!hr-payroll/**/src/test/**/target/
+
 ### IntelliJ IDEA ###
 .idea
 hr-worker/.idea
 hr-worker/*.iws
 hr-worker/*.iml
 hr-worker/*.ipr
+
+hr-payroll/.idea
+hr-payroll/*.iws
+hr-payroll/*.iml
+hr-payroll/*.ipr
