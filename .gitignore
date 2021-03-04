@@ -1,0 +1,12 @@
+HELP.md
+hr-worker/target/
+!hr-worker/.mvn/wrapper/maven-wrapper.jar
+!hr-worker/**/src/main/**/target/
+!hr-worker/**/src/test/**/target/
+
+### IntelliJ IDEA ###
+.idea
+hr-worker/.idea
+hr-worker/*.iws
+hr-worker/*.iml
+hr-worker/*.ipr
