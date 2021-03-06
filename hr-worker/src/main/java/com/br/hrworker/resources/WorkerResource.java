@@ -16,9 +16,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/workers")
-public class WorkResource {
+public class WorkerResource {
 
-    private static Logger logger = LoggerFactory.getLogger(WorkResource.class);
+    private static Logger logger = LoggerFactory.getLogger(WorkerResource.class);
 
     @Autowired
     private Environment env;
@@ -33,7 +33,9 @@ public class WorkResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Worker> findById(@PathVariable Long id) {
+    public ResponseEntity<Worker> findById(@PathVariable Long id) throws InterruptedException {
+
+       // Thread.sleep(3000L);
 
         logger.info("PORT = "+ env.getProperty("local.server.port"));
 
