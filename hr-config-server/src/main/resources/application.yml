@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: hr-config-sever
+
+  cloud:
+    config:
+      server:
+        git:
+          default-label: main
+          uri: https://github.com/donascimentomarcelo/ms-course-configs
+
+server:
+  port: 8888
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
