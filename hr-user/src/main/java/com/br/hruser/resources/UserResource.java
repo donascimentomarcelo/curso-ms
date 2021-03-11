@@ -18,13 +18,13 @@ public class UserResource {
     private UserRepository repository;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) throws InterruptedException {
+    public ResponseEntity<User> findById(@PathVariable Long id) {
         User user = repository.findById(id).get();
         return ResponseEntity.ok(user);
     }
 
     @GetMapping(value = "/search")
-    public ResponseEntity<User> findById(@RequestParam String email) throws InterruptedException {
+    public ResponseEntity<User> findByEmail(@RequestParam String email) {
         User user = repository.findByEmail(email);
         return ResponseEntity.ok(user);
     }
