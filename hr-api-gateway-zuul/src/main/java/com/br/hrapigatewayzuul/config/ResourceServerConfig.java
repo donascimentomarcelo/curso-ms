@@ -16,11 +16,20 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private JwtTokenStore tokenStore;
 
-    private static final String[] PUBLIC = { "/hr-oauth/oauth/token" };
+    private static final String[] PUBLIC = {
+            "/hr-oauth/oauth/token"
+    };
 
-    private static final String[] OPERATOR = { "/hr-worker/**" };
+    private static final String[] OPERATOR = {
+            "/hr-worker/**"
+    };
 
-    private static final String[] ADMIN = { "/hr-payroll/**", "/hr-user/**" };
+    private static final String[] ADMIN = {
+            "/hr-payroll/**",
+            "/hr-user/**",
+            "/hr-oauth/actuator/**",
+            "/hr-worker/actuator/**"
+    };
 
     @Override
     public void configure(final ResourceServerSecurityConfigurer resources) throws Exception {
