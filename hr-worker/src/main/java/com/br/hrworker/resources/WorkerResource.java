@@ -23,13 +23,6 @@ public class WorkerResource {
 
     private static Logger logger = LoggerFactory.getLogger(WorkerResource.class);
 
-    /**
-     * O test.config vem do github, do projeto de configuracao.
-     * Ele é espelhado no bootstrap.yml, em cloud.config.uri
-     */
-    @Value("${test.config}")
-    private String testConfig;
-
     @Autowired
     private Environment env;
 
@@ -44,7 +37,6 @@ public class WorkerResource {
 
     @GetMapping(value = "/configs")
     public ResponseEntity<List<Worker>> getConfigs() {
-        logger.info("CONFIG = " + testConfig);
         return ResponseEntity.noContent().build();
     }
 
