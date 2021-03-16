@@ -1,0 +1,107 @@
+version: '3'
+services:
+  hr-worker-pg12:
+    image: postgres:12-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=db_hr_worker
+      - POSTGRES_USER=postgres
+    networks:
+      - hr-net
+
+  hr-user-pg12:
+    image: postgres:12-alpine
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=db_hr_user
+      - POSTGRES_USER=postgres
+    networks:
+      - hr-net
+
+  hr-config-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hr-config-server:v1
+    ports:
+      - 8888:8888
+    environment:
+      - GITHUB_USER=donascimentomarcelo
+      - GITHUB_PASS=
+    networks:
+      - hr-net
+
+  hr-eureka-server:
+    image: hr-eureka-server:v1
+    ports:
+      - 8761:8761
+    hostname: hr-eureka-server
+    networks:
+      - hr-net
+
+  hr-api-gateway-zuul:
+    image: hr-api-gateway-zuul:v1
+    ports:
+      - 8765:8765
+    depends_on:
+      - hr-eureka-server
+    networks:
+      - hr-net
+    links:
+      - hr-eureka-server
+
+  hr-worker:
+    image: hr-worker:v1
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://hr-worker-pg12:5432/db_hr_worker
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+    depends_on:
+      - hr-worker-pg12
+      - hr-eureka-server
+    networks:
+      - hr-net
+    links:
+      - hr-worker-pg12
+      - hr-eureka-server
+
+  hr-user:
+    image: hr-user:v1
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://hr-user-pg12:5432/db_hr_user
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+    depends_on:
+      - hr-user-pg12
+      - hr-eureka-server
+    networks:
+      - hr-net
+    links:
+      - hr-user-pg12
+      - hr-eureka-server
+
+  hr-payroll:
+    image: hr-payroll:v1
+    depends_on:
+      - hr-eureka-server
+    networks:
+      - hr-net
+    links:
+      - hr-eureka-server
+
+  hr-oauth:
+    image: hr-oauth:v1
+    depends_on:
+      - hr-eureka-server
+    networks:
+      - hr-net
+    links:
+      - hr-eureka-server
+
+networks:
+  hr-net:
+    driver: bridge
